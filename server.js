@@ -70,22 +70,15 @@ function startScreen() {
 
 // add department
 function addDepartment() {
-
-
     inquirer.prompt({
-      
         type: "input",
         message: "What is the name of the department?",
         name: "departmentName"
-
-    }).then(function(answer){
-
-
-
-        connection.query("INSERT INTO department (name) VALUES (?)", [answer.departmentName] , function(err, res) {
+    }).then(function (answer) {
+        connection.query("INSERT INTO department (name) VALUES (?)", [answer.departmentName], function (err, res) {
             if (err) throw err;
             console.table(res)
             startScreen()
-    })
+        })
     })
 }
