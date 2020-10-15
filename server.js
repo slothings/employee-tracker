@@ -148,26 +148,65 @@ function addEmployee() {
         });
 }
 
+// view department
+function viewDepartment() {
+    let query = "SELECT * FROM department";
+    connection.query(query, function (err, res) {
+        if (err) throw err;
+        console.table(res);
+        startScreen();
+    });
+}
+
+// view roles
+function viewRoles() {
+    let query = "SELECT * FROM role";
+    connection.query(query, function (err, res) {
+        if (err) throw err;
+        console.table(res);
+        startScreen();
+    });
+}
+
+// view employees
+function viewEmployees() {
+    let query = "SELECT * FROM employee";
+    connection.query(query, function (err, res) {
+        if (err) throw err;
+        console.table(res);
+        startScreen();
+    });
+}
+
 // update employee
 function updateEmployee() {
     inquirer
-        .prompt([
-            {
-                type: "input",
-                message: "Which employee would you like to update?",
-                name: "employeeUpdate"
-            },
-            {
-                type: "input",
-                message: "What do you want to update to?",
-                name: "updateRole"
-            }
-        ])
-        .then(function (answer) {
-            connection.query('UPDATE employee SET role_id=? WHERE first_name= ?', [answer.updateRole, answer.employeeUpdate], function (err, res) {
-                if (err) throw err;
-                console.table(res);
-                startScreen();
-            });
+      .prompt([
+        {
+          type: "input",
+          message: "Which employee would you like to update?",
+          name: "employeeUpdate"
+        },
+        {
+          type: "input",
+          message: "What do you want to update to?",
+          name: "updateRole"
+        }
+      ])
+      .then(function(answer) {
+        // let query = `INSERT INTO department (name) VALUES ("${answer.deptName}")`
+        //let query = `'UPDATE employee SET role_id=${answer.updateRole} WHERE first_name= ${answer.eeUpdate}`;
+  
+        connection.query('UPDATE employee SET role_id=? WHERE first_name= ?',[answer.updateRole, answer.employeeUpdate],function(err, res) {
+          if (err) throw err;
+          console.table(res);
+          startScreen();
         });
+      });
+  }
+
+// quit
+function quit() {
+    connection.end();
+    process.exit();
 }
