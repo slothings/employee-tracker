@@ -16,11 +16,11 @@ connection.connect(function (err) {
     if (err) throw err;
     console.log("connected as id " + connection.threadId);
 
-    startScreen();
+    start();
 });
 
 // start function
-function startScreen() {
+function start() {
     inquirer
         .prompt({
             type: "list",
@@ -80,7 +80,7 @@ function addDepartment() {
             connection.query("INSERT INTO department (name) VALUES (?)", [answer.departmentName], function (err, res) {
                 if (err) throw err;
                 console.table(res)
-                startScreen();
+                start();
             })
         })
 }
@@ -109,7 +109,7 @@ function addRole() {
             connection.query("INSERT INTO role (title, salary, department_id) VALUES (?, ?, ?)", [answer.roleName, answer.salaryTotal, answer.deptID], function (err, res) {
                 if (err) throw err;
                 console.table(res);
-                startScreen();
+                start();
             });
         });
 }
@@ -143,7 +143,7 @@ function addEmployee() {
             connection.query("INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)", [answer.employeeFirstName, answer.employeeLastName, answer.roleID, answer.managerID], function (err, res) {
                 if (err) throw err;
                 console.table(res);
-                startScreen();
+                start();
             });
         });
 }
@@ -154,7 +154,7 @@ function viewDepartment() {
     connection.query(query, function (err, res) {
         if (err) throw err;
         console.table(res);
-        startScreen();
+        start();
     });
 }
 
@@ -164,7 +164,7 @@ function viewRoles() {
     connection.query(query, function (err, res) {
         if (err) throw err;
         console.table(res);
-        startScreen();
+        start();
     });
 }
 
@@ -174,36 +174,33 @@ function viewEmployees() {
     connection.query(query, function (err, res) {
         if (err) throw err;
         console.table(res);
-        startScreen();
+        start();
     });
 }
 
 // update employee
 function updateEmployee() {
     inquirer
-      .prompt([
-        {
-          type: "input",
-          message: "Which employee would you like to update?",
-          name: "employeeUpdate"
-        },
-        {
-          type: "input",
-          message: "What do you want to update to?",
-          name: "updateRole"
-        }
-      ])
-      .then(function(answer) {
-        // let query = `INSERT INTO department (name) VALUES ("${answer.deptName}")`
-        //let query = `'UPDATE employee SET role_id=${answer.updateRole} WHERE first_name= ${answer.eeUpdate}`;
-  
-        connection.query('UPDATE employee SET role_id=? WHERE first_name= ?',[answer.updateRole, answer.employeeUpdate],function(err, res) {
-          if (err) throw err;
-          console.table(res);
-          startScreen();
+        .prompt([
+            {
+                type: "input",
+                message: "Which employee would you like to update?",
+                name: "employeeUpdate"
+            },
+            {
+                type: "input",
+                message: "What role id number do you want to update to?",
+                name: "updateRole"
+            }
+        ])
+        .then(function (answer) {
+            connection.query("UPDATE employee SET role_id=? WHERE first_name=?", [answer.updateRole, answer.employeeUpdate], function (err, res) {
+                if (err) throw err;
+                console.table(res);
+                start();
+            });
         });
-      });
-  }
+}
 
 // quit
 function quit() {
