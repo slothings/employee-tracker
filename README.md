@@ -6,6 +6,6 @@ This command line application can be used by an employer to add departments, emp
 
 ![Application landing page](/employeeTrackerSS.JPG)
 
-[Employee Tracker](https://drive.google.com/file/d/11l-lNyYT37tSbmFXuQOcK9TU5FkWcZyp/view) tutorial video is hosted on Google Drive
+[Employee Tracker](https://drive.google.com/file/d/1k2QLK6MqlZngVStgwXGjkhI3TCmRLWF8/view) tutorial video is hosted on Google Drive
 
 This application was authored by [Seth Martineau](https://github.com/slothings)
