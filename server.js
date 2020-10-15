@@ -140,9 +140,31 @@ function addEmployee() {
             }
         ])
         .then(function (answer) {
-
-
             connection.query("INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)", [answer.employeeFirstName, answer.employeeLastName, answer.roleID, answer.managerID], function (err, res) {
+                if (err) throw err;
+                console.table(res);
+                startScreen();
+            });
+        });
+}
+
+// update employee
+function updateEmployee() {
+    inquirer
+        .prompt([
+            {
+                type: "input",
+                message: "Which employee would you like to update?",
+                name: "employeeUpdate"
+            },
+            {
+                type: "input",
+                message: "What do you want to update to?",
+                name: "updateRole"
+            }
+        ])
+        .then(function (answer) {
+            connection.query('UPDATE employee SET role_id=? WHERE first_name= ?', [answer.updateRole, answer.employeeUpdate], function (err, res) {
                 if (err) throw err;
                 console.table(res);
                 startScreen();
